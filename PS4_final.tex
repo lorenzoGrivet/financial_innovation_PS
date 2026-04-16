@@ -1,0 +1,1172 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,booktabs,longtable,array,multirow}
+\usepackage{caption}
+\usepackage{enumitem}
+
+\begin{document}
+
+\title{Problem Set 4: Derivatives}
+\author{}
+\date{}
+\maketitle
+
+\section*{Exercise 2. Stochastic Calculus and Pricing}
+\subsection*{2.1 From random walk to Brownian motion.}
+
+Let $\{\omega_i\}_{i\geq1}$ be IID random variables such that
+\[
+\mathbb P(\omega_i=1)=\mathbb P(\omega_i=-1)=\frac12,
+\qquad
+\mathbb E[\omega_i]=0,
+\qquad
+\operatorname{Var}(\omega_i)=1.
+\]
+
+Define the scaled random walk:
+\[
+W^{(m)}(t)=\frac{1}{\sqrt m}\sum_{i=1}^{\lfloor mt\rfloor}\omega_i.
+\]
+
+\subsubsection*{Mean}
+
+Using linearity of expectation:
+\[
+\mathbb E[W^{(m)}(t)]
+=
+\frac{1}{\sqrt m}\sum_{i=1}^{\lfloor mt\rfloor}\mathbb E[\omega_i]
+=
+\frac{1}{\sqrt m}\sum_{i=1}^{\lfloor mt\rfloor}0=0.
+\]
+
+\subsubsection*{Variance}
+
+Since the $\omega_i$ are independent:
+\[
+\operatorname{Var}\!\left(W^{(m)}(t)\right)
+=
+\frac{1}{m}\sum_{i=1}^{\lfloor mt\rfloor}\operatorname{Var}(\omega_i)
+=
+\frac{1}{m}\lfloor mt\rfloor.
+\]
+
+As $m\to\infty$,
+\[
+\frac{\lfloor mt\rfloor}{m}\to t.
+\]
+
+Hence:
+\[
+\operatorname{Var}(W^{(m)}(t))\to t.
+\]
+
+\subsubsection*{Increment from $s$ to $t$}
+
+For $0\le s<t$:
+\[
+W^{(m)}(t)-W^{(m)}(s)
+=
+\frac{1}{\sqrt m}\sum_{i=\lfloor ms\rfloor+1}^{\lfloor mt\rfloor}\omega_i.
+\]
+
+Therefore:
+\[
+\mathbb E[W^{(m)}(t)-W^{(m)}(s)]=0,
+\]
+and
+\[
+\operatorname{Var}(W^{(m)}(t)-W^{(m)}(s))
+=
+\frac{\lfloor mt\rfloor-\lfloor ms\rfloor}{m}\to t-s.
+\]
+
+\subsubsection*{Central Limit Theorem}
+
+The increment is the normalized sum of many IID centered variables. By the Central Limit Theorem:
+\[
+W^{(m)}(t)-W^{(m)}(s)\xrightarrow[m\to\infty]{d}\mathcal N(0,t-s).
+\]
+
+\subsubsection*{Motivation for Brownian Motion}
+
+This suggests defining a continuous-time limit process $\{W_t\}_{t\ge0}$ such that:
+
+\begin{itemize}
+    \item $W_0=0$,
+    \item increments are Gaussian:
+    \[
+    W_t-W_s\sim\mathcal N(0,t-s),
+    \]
+    \item increments over disjoint intervals are independent,
+    \item sample paths are continuous.
+\end{itemize}
+
+This process is called \textbf{Brownian motion}.
+
+%---------------------------------------------------
+
+\subsection*{2.2 Quadratic Variation}
+
+Let
+\[
+0=t_0<t_1<\cdots<t_n=t
+\]
+be a partition of $[0,t]$, and define
+\[
+\Delta t_i=t_{i+1}-t_i.
+\]
+
+Set
+\[
+Q_n(t)=\sum_{i=0}^{n-1}(W_{t_{i+1}}-W_{t_i})^2.
+\]
+
+\subsubsection*{Expectation}
+
+Since Brownian increments satisfy
+\[
+W_{t_{i+1}}-W_{t_i}\sim\mathcal N(0,\Delta t_i),
+\]
+we have:
+\[
+\mathbb E[(W_{t_{i+1}}-W_{t_i})^2]=\Delta t_i.
+\]
+
+Hence:
+\[
+\mathbb E[Q_n(t)]
+=
+\sum_{i=0}^{n-1}\Delta t_i=t.
+\]
+
+\subsubsection*{Representation with Standard Normal Variables}
+
+Write
+\[
+W_{t_{i+1}}-W_{t_i}=\sqrt{\Delta t_i}\,Z_i,
+\qquad Z_i\sim\mathcal N(0,1).
+\]
+
+Then:
+\[
+(W_{t_{i+1}}-W_{t_i})^2=\Delta t_i\, Z_i^2.
+\]
+
+Since $Z_i^2\sim\chi^2_1$, each squared increment is a time-step multiplied by a chi-squared random variable.
+
+\subsubsection*{Variance of One Term}
+
+Using $\operatorname{Var}(Z_i^2)=2$:
+\[
+\operatorname{Var}\!\left((W_{t_{i+1}}-W_{t_i})^2\right)
+=
+(\Delta t_i)^2\operatorname{Var}(Z_i^2)
+=
+2(\Delta t_i)^2.
+\]
+
+\subsubsection*{Variance of $Q_n(t)$}
+
+Because Brownian increments are independent:
+\[
+\operatorname{Var}(Q_n(t))
+=
+\sum_{i=0}^{n-1}2(\Delta t_i)^2.
+\]
+
+Now:
+\[
+\sum_{i=0}^{n-1}(\Delta t_i)^2
+\le
+\left(\max_i \Delta t_i\right)\sum_{i=0}^{n-1}\Delta t_i
+=
+t\max_i\Delta t_i.
+\]
+
+Thus:
+\[
+\operatorname{Var}(Q_n(t))
+\le
+2t\max_i\Delta t_i \to 0
+\quad\text{as}\quad \max_i\Delta t_i\to0.
+\]
+
+Since also $\mathbb E[Q_n(t)]=t$, we conclude:
+\[
+Q_n(t)\to t
+\]
+(in $L^2$, hence in probability).
+
+\subsubsection*{Informal Differential Rule}
+
+This justifies the It\^o rule:
+\[
+(dW_t)^2=dt.
+\]
+
+Moreover:
+
+\[
+dt^2=o(dt),\qquad dt\,dW_t=o(dt),
+\]
+because $dW_t$ is of size $\sqrt{dt}$, so:
+\[
+dt\,dW_t\sim dt^{3/2},\qquad dt^2\sim dt^2.
+\]
+
+Both are negligible compared with $dt$, while $(dW_t)^2\sim dt$ survives.
+
+%---------------------------------------------------
+
+\subsection*{2.3 Black--Scholes with Inventory Costs}
+
+Assume:
+\[
+dS_t=\mu S_t\,dt+\sigma S_t\,dW_t.
+\]
+
+Let $V(S,t)$ be the derivative price.
+
+\subsubsection*{It\^o's Lemma}
+
+By It\^o:
+\[
+dV=V_t\,dt+V_S\,dS+\frac12V_{SS}(dS)^2.
+\]
+
+Since:
+\[
+(dS)^2=\sigma^2S^2dt,
+\]
+we get:
+\[
+dV=
+\left(V_t+\mu SV_S+\frac12\sigma^2S^2V_{SS}\right)dt
++\sigma SV_S\,dW_t.
+\]
+
+\subsubsection*{Replicating Portfolio}
+
+Let:
+\[
+X_t=\Delta_t S_t+\Phi_t B_t,
+\qquad dB_t=rB_tdt.
+\]
+
+Equivalently:
+\[
+V_t-\Delta_tS_t=\Phi_tB_t.
+\]
+
+These are the same statement: the option value equals holdings in stock plus holdings in bond.
+
+\subsubsection*{Inventory Cost}
+
+Holding one unit of stock costs $cS_tdt$ per unit time, so:
+\[
+dX_t=\Delta_t\,dS_t+\Phi_t\,dB_t-c\Delta_tS_tdt.
+\]
+
+Substitute:
+\[
+dX_t=
+\Delta_t(\mu S_tdt+\sigma S_tdW_t)+\Phi_trB_tdt-c\Delta_tS_tdt.
+\]
+
+Since:
+\[
+\Phi_tB_t=V-\Delta_tS,
+\]
+then:
+\[
+dX_t=
+\Delta_t\mu Sdt+\Delta_t\sigma SdW_t+r(V-\Delta_tS)dt-c\Delta_tSdt.
+\]
+
+So:
+\[
+dX_t=
+\left[rV+\Delta_tS(\mu-r-c)\right]dt+\Delta_t\sigma SdW_t.
+\]
+
+Now impose replication: $dX_t=dV$.
+
+Matching diffusion terms:
+\[
+\Delta_t=V_S.
+\]
+
+Matching drift terms:
+\[
+V_t+\mu SV_S+\frac12\sigma^2S^2V_{SS}
+=
+rV+V_SS(\mu-r-c).
+\]
+
+Simplify (the $\mu$ terms cancel):
+\[
+V_t+(r+c)SV_S+\frac12\sigma^2S^2V_{SS}-rV=0.
+\]
+
+\[
+\boxed{
+V_t+(r+c)SV_S+\frac12\sigma^2S^2V_{SS}-rV=0
+}
+\]
+
+\subsubsection*{Comparison with Dividend Yield}
+
+Standard Black--Scholes with continuous dividend yield $q$:
+\[
+V_t+(r-q)SV_S+\frac12\sigma^2S^2V_{SS}-rV=0.
+\]
+
+Comparing coefficients:
+\[
+r-q=r+c
+\quad\Longrightarrow\quad
+q=-c.
+\]
+
+Thus inventory cost acts like a \textbf{negative dividend yield}.
+
+%---------------------------------------------------
+
+\subsection*{2.4 Black--Scholes when $\ln S_t$ is Ornstein--Uhlenbeck}
+
+Assume:
+\[
+d(\ln S_t)=\kappa(\theta-\ln S_t)dt+\sigma dW_t.
+\]
+
+Let:
+\[
+X_t=\ln S_t,\qquad S_t=e^{X_t}.
+\]
+
+\subsubsection*{Dynamics of $S_t$}
+
+Apply It\^o to $f(X)=e^X$:
+
+\[
+f'(X)=e^X=S,\qquad f''(X)=e^X=S.
+\]
+
+Hence:
+\[
+dS_t=f'(X_t)dX_t+\frac12f''(X_t)(dX_t)^2.
+\]
+
+Since $(dX_t)^2=\sigma^2dt$:
+\[
+dS_t
+=
+S_t\left[\kappa(\theta-\ln S_t)+\frac12\sigma^2\right]dt+\sigma S_t dW_t.
+\]
+
+\subsubsection*{Pricing PDE}
+
+Write stock dynamics as:
+\[
+dS_t=\mu(S_t,t)S_tdt+\sigma S_tdW_t,
+\]
+where
+\[
+\mu(S,t)=\kappa(\theta-\ln S)+\frac12\sigma^2.
+\]
+
+Using the same replication argument as before, the drift cancels out. Therefore the PDE is:
+
+\[
+\boxed{
+V_t+rSV_S+\frac12\sigma^2S^2V_{SS}-rV=0
+}
+\]
+
+\subsubsection*{Comparison with Standard Black--Scholes}
+
+This is the same PDE as the standard Black--Scholes equation (without dividends).
+
+Although the \emph{physical} stock drift is mean-reverting in log-price, arbitrage pricing depends on hedging away risk, not on the real-world expected return. Once the stochastic term is replicated using the stock, the drift disappears and only $r$ remains.
+
+%---------------------------------------------------
+
+\subsection*{Conclusion}
+
+The notation $o(dt)$ captures terms negligible relative to $dt$. In stochastic calculus, this matters because Brownian motion has nonzero quadratic variation:
+\[
+(dW_t)^2=dt.
+\]
+This is the key difference from ordinary calculus. It produces the second-derivative term in It\^o's lemma and therefore in pricing PDEs. Finally, even if the stock follows more complicated dynamics such as an Ornstein--Uhlenbeck log-price process, replication removes dependence on the physical drift, so the option pricing equation keeps the Black--Scholes structure.
+
+\newpage
+\section*{Exercise 4. Option Trading Strategies}
+
+In this note we study six classical option strategies built from European calls, puts, stock, and cash.  
+We assume the Black--Scholes framework and denote:
+
+\[
+\omega=T-t
+\]
+
+(time to maturity),
+
+\[
+C(S,t;K,T)
+\]
+
+the price of a European call with strike $K$ and maturity $T$, and
+
+\[
+P(S,t;K,T)
+\]
+
+the price of a European put with strike $K$ and maturity $T$.
+
+For simplicity, we write:
+
+\[
+C(K):=C(S,t;K,T), \qquad P(K):=P(S,t;K,T).
+\]
+
+The key idea of the exercise is:
+
+\[
+\textbf{If a payoff is a sum of simpler payoffs, then its price is the same sum of prices.}
+\]
+
+This follows from no-arbitrage and linearity of replication.
+
+%=========================================================
+\subsection*{4.1 Risk-Neutral Pricing}
+
+Under the risk-neutral probability measure $\mathbb Q$:
+
+\[
+V(S,t)=e^{-r(T-t)}\mathbb E^{\mathbb Q}[\Phi(S_T)\mid S_t=S].
+\]
+
+Therefore:
+
+\[
+V(S,t)=e^{-r\omega}\mathbb E^{\mathbb Q}[\Phi(S_T)\mid S_t=S].
+\]
+
+\subsubsection*{Why this works for any European payoff}
+
+A European derivative pays only at time $T$, and its payoff depends only on $S_T$.  
+Hence, once we know the distribution of $S_T$ under $\mathbb Q$, we can price any payoff $\Phi(S_T)$ by taking its discounted expectation.
+
+\subsubsection*{Distribution of $S_T$}
+
+Under Black--Scholes:
+
+\[
+dS_u=rS_u\,du+\sigma S_u\,dW_u.
+\]
+
+Applying It\^o's lemma to $\ln S_u$:
+
+\[
+d(\ln S_u)=\left(r-\frac12\sigma^2\right)du+\sigma dW_u.
+\]
+
+Integrating from $t$ to $T$:
+
+\[
+\ln S_T=\ln S+\left(r-\frac12\sigma^2\right)\omega+\sigma(W_T-W_t).
+\]
+
+Since:
+
+\[
+W_T-W_t\sim N(0,\omega),
+\]
+
+we obtain:
+
+\[
+\ln S_T\sim N\!\left(\ln S+\left(r-\frac12\sigma^2\right)\omega,\sigma^2\omega\right).
+\]
+
+Thus $S_T$ is lognormal.
+
+\subsubsection*{Integral Form}
+
+If $f_{LN}$ is the lognormal density:
+
+\[
+V(S,t)=e^{-r\omega}\int_0^\infty \Phi(x)\,f_{LN}(x)\,dx.
+\]
+
+%=========================================================
+\subsection*{4.2 Strategy Decomposition}
+
+We now analyze the six strategies listed in the assignment.
+
+\bigskip
+\textbf{Important notation.}
+
+\begin{itemize}[leftmargin=1.8cm]
+\item Long call = buy one call.
+\item Short call = sell one call.
+\item Long put = buy one put.
+\item Long stock = buy one share.
+\item Short two calls = sell two call options.
+\end{itemize}
+
+%=========================================================
+
+
+\begin{center}
+\small
+\begin{longtable}{p{2.8cm} p{4.3cm} p{5.2cm} p{3.2cm}}
+\toprule
+\textbf{Strategy} & \textbf{Terminal Payoff $\Phi(S_T)$} & \textbf{How it is Built} & \textbf{Price at time $t$} \\
+\midrule
+\endfirsthead
+
+
+
+Straddle
+&
+$(S_T-K)^+ + (K-S_T)^+$
+&
+Long 1 call with strike $K$ + Long 1 put with strike $K$
+&
+$C(K)+P(K)$
+\\
+
+Covered Call
+&
+$S_T-(S_T-K)^+$
+&
+Long stock + Short 1 call with strike $K$
+&
+$S-C(K)$
+\\
+
+Butterfly
+&
+$(S_T-K_1)^+-2(S_T-K_2)^++(S_T-K_3)^+$
+&
+Long call $K_1$, Short 2 calls $K_2$, Long call $K_3$
+&
+$C(K_1)-2C(K_2)+C(K_3)$
+\\
+
+Collar
+&
+$S_T+(K_P-S_T)^+-(S_T-K_C)^+$
+&
+Long stock + Long put $K_P$ + Short call $K_C$
+&
+$S+P(K_P)-C(K_C)$
+\\
+
+Protective Put
+&
+$S_T+(K-S_T)^+$
+&
+Long stock + Long put
+&
+$S+P(K)$
+\\
+
+Bull Call Spread
+&
+$(S_T-K_1)^+-(S_T-K_2)^+$
+&
+Long call $K_1$ + Short call $K_2$
+&
+$C(K_1)-C(K_2)$
+\\
+
+\bottomrule
+\caption{Table 1: Summary of payoff, portfolio decomposition, and pricing formulas.}
+\end{longtable}
+\end{center}
+
+%=========================================================
+\subsection*{Explanation of the Main Constructions}
+
+\subsubsection*{Straddle}
+
+A straddle buys both a call and a put with the same strike.
+
+\[
+\Phi=(S_T-K)^+ + (K-S_T)^+
+\]
+
+If the stock goes far above $K$, the call pays.  
+If the stock goes far below $K$, the put pays.  
+Therefore the strategy benefits from \emph{large moves in either direction}.
+
+Price:
+
+\[
+V=C(K)+P(K).
+\]
+
+%---------------------------------------------------------
+\subsubsection*{Covered Call}
+
+A covered call means owning the stock and selling a call.
+
+\[
+\Phi=S_T-(S_T-K)^+
+\]
+
+If $S_T\le K$, the call expires worthless and you keep the stock.  
+If $S_T>K$, the upside is partially given away because the sold call is exercised.
+
+Price:
+
+\[
+V=S-C(K).
+\]
+
+%---------------------------------------------------------
+\subsubsection*{Butterfly}
+
+The butterfly uses three strikes:
+
+\[
+K_1<K_2<K_3
+\]
+
+with $K_2$ usually centered.
+
+Payoff:
+
+\[
+\Phi=(S_T-K_1)^+-2(S_T-K_2)^++(S_T-K_3)^+.
+\]
+
+It gains most when the final stock price stays near the middle strike $K_2$.
+
+Price:
+
+\[
+V=C(K_1)-2C(K_2)+C(K_3).
+\]
+
+%---------------------------------------------------------
+\subsubsection*{Collar}
+
+A collar combines upside limitation and downside protection:
+
+\[
+\Phi=S_T+(K_P-S_T)^+-(S_T-K_C)^+.
+\]
+
+Interpretation:
+
+\begin{itemize}
+\item The put creates a floor (protection below $K_P$).
+\item The short call caps gains above $K_C$.
+\end{itemize}
+
+Price:
+
+\[
+V=S+P(K_P)-C(K_C).
+\]
+
+%---------------------------------------------------------
+\subsubsection*{Protective Put}
+
+A protective put means buying stock and buying insurance.
+
+\[
+\Phi=S_T+(K-S_T)^+
+\]
+
+If the stock crashes, the put offsets losses below $K$.
+
+Price:
+
+\[
+V=S+P(K).
+\]
+
+%---------------------------------------------------------
+\subsubsection*{Bull Call Spread}
+
+This strategy expresses a moderate bullish view.
+
+\[
+\Phi=(S_T-K_1)^-(S_T-K_2)^+
+\]
+
+(correct form:)
+
+\[
+\Phi=(S_T-K_1)^+-(S_T-K_2)^+, \qquad K_1<K_2.
+\]
+
+You gain when the stock rises, but profits are capped above $K_2$.
+
+Price:
+
+\[
+V=C(K_1)-C(K_2).
+\]
+
+%=========================================================
+\subsection*{4.3 Closed-Form Black--Scholes Prices}
+
+We now compute each strategy explicitly.
+
+The Black--Scholes formulas are:
+
+\[
+C(K)=SN(d_1)-Ke^{-r\omega}N(d_2),
+\]
+
+\[
+P(K)=Ke^{-r\omega}N(-d_2)-SN(-d_1),
+\]
+
+where
+
+\[
+d_1(K)=\frac{\ln(S/K)+(r+\frac12\sigma^2)\omega}{\sigma\sqrt{\omega}},
+\qquad
+d_2(K)=d_1(K)-\sigma\sqrt{\omega}.
+\]
+
+When strikes differ, we compute $d_1,d_2$ using the corresponding strike.
+
+%---------------------------------------------------------
+\subsubsection*{Straddle}
+
+By definition:
+
+\[
+V_{\text{str}}=C(K)+P(K).
+\]
+
+Insert the formulas:
+
+\[
+V_{\text{str}}
+=
+\big[SN(d_1)-Ke^{-r\omega}N(d_2)\big]
++
+\big[Ke^{-r\omega}N(-d_2)-SN(-d_1)\big].
+\]
+
+Group stock terms and bond terms:
+
+\[
+V_{\text{str}}
+=
+S\big(N(d_1)-N(-d_1)\big)
++
+Ke^{-r\omega}\big(N(-d_2)-N(d_2)\big).
+\]
+
+Using:
+
+\[
+N(-x)=1-N(x),
+\]
+
+we obtain:
+
+\[
+N(d_1)-N(-d_1)=2N(d_1)-1,
+\]
+
+\[
+N(-d_2)-N(d_2)=1-2N(d_2).
+\]
+
+Therefore:
+
+\[
+\boxed{
+V_{\text{str}}
+=
+S(2N(d_1)-1)+Ke^{-r\omega}(1-2N(d_2))
+}
+\]
+
+%---------------------------------------------------------
+\subsection*{Covered Call}
+
+Price:
+
+\[
+V_{\text{cc}}=S-C(K).
+\]
+
+Substitute the call formula:
+
+\[
+V_{\text{cc}}
+=
+S-\big[SN(d_1)-Ke^{-r\omega}N(d_2)\big].
+\]
+
+Distribute the minus sign:
+
+\[
+V_{\text{cc}}
+=
+S-SN(d_1)+Ke^{-r\omega}N(d_2).
+\]
+
+Factor $S$:
+
+\[
+\boxed{
+V_{\text{cc}}
+=
+S(1-N(d_1))+Ke^{-r\omega}N(d_2)
+}
+\]
+
+%---------------------------------------------------------
+\subsubsection*{Butterfly Spread}
+
+Price:
+
+\[
+V_{\text{bf}}=C(K_1)-2C(K_2)+C(K_3).
+\]
+
+Now replace each call:
+
+\[
+V_{\text{bf}}
+=
+\big[S N(d_1^{(1)})-K_1e^{-r\omega}N(d_2^{(1)})\big]
+\]
+
+\[
+-2\big[S N(d_1^{(2)})-K_2e^{-r\omega}N(d_2^{(2)})\big]
+\]
+
+\[
++\big[S N(d_1^{(3)})-K_3e^{-r\omega}N(d_2^{(3)})\big].
+\]
+
+Collect stock terms:
+
+\[
+S\Big(N(d_1^{(1)})-2N(d_1^{(2)})+N(d_1^{(3)})\Big),
+\]
+
+and discounted strike terms:
+
+\[
+-e^{-r\omega}
+\Big(
+K_1N(d_2^{(1)})-2K_2N(d_2^{(2)})+K_3N(d_2^{(3)})
+\Big).
+\]
+
+Hence:
+
+\[
+\boxed{
+V_{\text{bf}}
+=
+S\left[N(d_1^{(1)})-2N(d_1^{(2)})+N(d_1^{(3)})\right]
+-
+e^{-r\omega}
+\left[
+K_1N(d_2^{(1)})-2K_2N(d_2^{(2)})+K_3N(d_2^{(3)})
+\right]
+}
+\]
+
+where $d_i^{(j)}=d_i(K_j)$.
+
+%---------------------------------------------------------
+\subsubsection*{Collar}
+
+Price:
+
+\[
+V_{\text{col}}=S+P(K_P)-C(K_C).
+\]
+
+Substitute:
+
+\[
+V_{\text{col}}
+=
+S+\big[K_Pe^{-r\omega}N(-d_2^P)-SN(-d_1^P)\big]
+-\big[SN(d_1^C)-K_Ce^{-r\omega}N(d_2^C)\big].
+\]
+
+Expand:
+
+\[
+V_{\text{col}}
+=
+S-SN(-d_1^P)-SN(d_1^C)
++K_Pe^{-r\omega}N(-d_2^P)
++K_Ce^{-r\omega}N(d_2^C).
+\]
+
+Therefore:
+
+\[
+\boxed{
+V_{\text{col}}
+=
+S\big[1-N(-d_1^P)-N(d_1^C)\big]
++
+e^{-r\omega}
+\big[
+K_PN(-d_2^P)+K_CN(d_2^C)
+\big]
+}
+\]
+
+%---------------------------------------------------------
+\subsubsection*{Protective Put}
+
+Price:
+
+\[
+V_{\text{pp}}=S+P(K).
+\]
+
+Insert put formula:
+
+\[
+V_{\text{pp}}
+=
+S+Ke^{-r\omega}N(-d_2)-SN(-d_1).
+\]
+
+Factor $S$:
+
+\[
+\boxed{
+V_{\text{pp}}
+=
+S\big(1-N(-d_1)\big)+Ke^{-r\omega}N(-d_2)
+}
+\]
+
+Since $1-N(-d_1)=N(d_1)$, equivalently:
+
+\[
+\boxed{
+V_{\text{pp}}=SN(d_1)+Ke^{-r\omega}N(-d_2)
+}
+\]
+
+%---------------------------------------------------------
+\subsubsection*{Bull Call Spread}
+
+Price:
+
+\[
+V_{\text{bull}}=C(K_1)-C(K_2).
+\]
+
+Substitute:
+
+\[
+V_{\text{bull}}
+=
+\big[S N(d_1^{(1)})-K_1e^{-r\omega}N(d_2^{(1)})\big]
+-
+\big[S N(d_1^{(2)})-K_2e^{-r\omega}N(d_2^{(2)})\big].
+\]
+
+Expand:
+
+\[
+V_{\text{bull}}
+=
+S\big(N(d_1^{(1)})-N(d_1^{(2)})\big)
+-
+e^{-r\omega}
+\big(K_1N(d_2^{(1)})-K_2N(d_2^{(2)})\big).
+\]
+
+Thus:
+
+\[
+\boxed{
+V_{\text{bull}}
+=
+S\left[N(d_1^{(1)})-N(d_1^{(2)})\right]
+-
+e^{-r\omega}
+\left[K_1N(d_2^{(1)})-K_2N(d_2^{(2)})\right]
+}
+\]
+
+%=========================================================
+\subsection*{4.4 Greeks}
+
+Because derivatives are linear operators:
+
+\[
+G(aV_1+bV_2)=aG(V_1)+bG(V_2),
+\]
+
+for any Greek $G$.
+
+So the Greeks of each strategy are obtained by summing the Greeks of its components.
+
+%=========================================================
+
+
+\begin{center}
+\small
+\begin{longtable}{p{3cm} p{11cm}}
+\toprule
+\textbf{Strategy} & \textbf{Greeks} \\
+\midrule
+\endfirsthead
+
+\toprule
+\textbf{Strategy} & \textbf{Greeks} \\
+\midrule
+\endhead
+
+Straddle &
+$\Delta=\Delta_C+\Delta_P,\quad
+\Gamma=\Gamma_C+\Gamma_P,\quad
+\Theta=\Theta_C+\Theta_P,\quad
+\nu=\nu_C+\nu_P,\quad
+\rho=\rho_C+\rho_P$
+\\
+
+Covered Call &
+$\Delta=1-\Delta_C,\quad
+\Gamma=-\Gamma_C,\quad
+\Theta=-\Theta_C,\quad
+\nu=-\nu_C,\quad
+\rho=-\rho_C$
+\\
+
+Butterfly &
+$\Delta=\Delta_1-2\Delta_2+\Delta_3$
+
+$\Gamma=\Gamma_1-2\Gamma_2+\Gamma_3$
+
+$\Theta=\Theta_1-2\Theta_2+\Theta_3$
+
+$\nu=\nu_1-2\nu_2+\nu_3$
+
+$\rho=\rho_1-2\rho_2+\rho_3$
+\\
+
+Collar &
+$\Delta=1+\Delta_P-\Delta_C$
+
+$\Gamma=\Gamma_P-\Gamma_C$
+
+$\Theta=\Theta_P-\Theta_C$
+
+$\nu=\nu_P-\nu_C$
+
+$\rho=\rho_P-\rho_C$
+\\
+
+Protective Put &
+$\Delta=1+\Delta_P,\quad
+\Gamma=\Gamma_P,\quad
+\Theta=\Theta_P,\quad
+\nu=\nu_P,\quad
+\rho=\rho_P$
+\\
+
+Bull Call Spread &
+$\Delta=\Delta_1-\Delta_2$
+
+$\Gamma=\Gamma_1-\Gamma_2$
+
+$\Theta=\Theta_1-\Theta_2$
+
+$\nu=\nu_1-\nu_2$
+
+$\rho=\rho_1-\rho_2$
+\\
+
+\bottomrule
+\caption{Greeks obtained by linearity.}
+\end{longtable}
+\end{center}
+
+%=========================================================
+\newpage
+\subsection*{4.5 Interpretation}
+
+\begin{center}
+\small
+\begin{longtable}{p{2.8cm} p{3.3cm} p{3.2cm} p{5.2cm}}
+\toprule
+\textbf{Strategy} & \textbf{Market View} & \textbf{Gamma Profile} & \textbf{Typical Use Case} \\
+\midrule
+\endfirsthead
+
+\toprule
+\textbf{Strategy} & \textbf{Market View} & \textbf{Gamma Profile} & \textbf{Typical Use Case} \\
+\midrule
+\endhead
+
+Straddle &
+Volatility-based &
+Long gamma &
+Expecting a strong move but unsure of direction
+\\
+
+Covered Call &
+Mild bullish / neutral &
+Short gamma &
+Generate extra income on an existing stock position
+\\
+
+Butterfly &
+Range-bound &
+Mixed &
+Expecting price near a target level
+\\
+
+Collar &
+Protective bullish &
+Mixed / limited &
+Keep stock exposure while reducing downside risk
+\\
+
+Protective Put &
+Protective bullish &
+Long gamma &
+Insurance for a long-term stock investor
+\\
+
+Bull Call Spread &
+Moderately bullish &
+Positive but capped &
+Cheaper bullish position than buying a naked call
+\\
+
+\bottomrule
+\caption{Interpretation of the six strategies.}
+\end{longtable}
+\end{center}
+
+%=========================================================
+\subsection*{Conclusion}
+
+The whole exercise is based on one fundamental principle:
+
+\[
+\boxed{\text{Complex payoffs can be decomposed into simple payoffs.}}
+\]
+
+Once we know how to price calls, puts, stock, and bonds under Black--Scholes, every strategy follows immediately by linearity. The same reasoning applies to sensitivities (Greeks): portfolio risk is simply the sum of the risks of each component.
+
+\end{document}
