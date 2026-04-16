@@ -1,0 +1,433 @@
+\documentclass[11pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{parskip}
+\usepackage{color}
+
+\title{\textbf{Problem Set 5: Lagos-Wright Model}}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Exercise 1: Design of Central Bank Digital Currencies}
+
+\subsection*{Part 1: Bellman Equations}
+
+\subsubsection*{1. CM problem}
+
+In the CM, a buyer with portfolio $(z_m,z_d)$ chooses consumption $x$, labor $h$, and next period's portfolio $(z'_m,z'_d)$.  
+The Bellman equation is
+\[
+W(z_m,z_d)
+= \max_{x,h,z'_m,z'_d} \{ x - h + \beta V(z'_m,z'_d) \}
+\]
+subject to the CM budget constraint
+\[
+x + z'_m + z'_d = h + z_m + (1+i_d) z_d + T.
+\]
+
+\subsubsection*{2. Linearity of the CM value function}
+
+Use the budget constraint to eliminate labor:
+\[
+h = x + z'_m + z'_d - z_m - (1+i_d)z_d - T.
+\]
+Substituting into the Bellman equation gives
+\begin{align*}
+W(z_m,z_d)
+&= \max_{x,z'_m,z'_d} \bigl\{
+x - [x + z'_m + z'_d - z_m - (1+i_d)z_d - T]
++ \beta V(z'_m,z'_d) \bigr\} \\
+&= \max_{x,z'_m,z'_d} \bigl\{
+z_m + (1+i_d)z_d + T - z'_m - z'_d + \beta V(z'_m,z'_d)
+\bigr\}.
+\end{align*}
+
+Define the constant
+\[
+W(0,0) \equiv \max_{x,z'_m,z'_d}
+\{ T - z'_m - z'_d + \beta V(z'_m,z'_d) \},
+\]
+which does not depend on $(z_m,z_d)$.  
+Then we can write
+\[
+W(z_m,z_d) = z_m + (1+i_d)z_d + W(0,0),
+\]
+showing that $W$ is linear in the current portfolio.
+
+\subsubsection*{3. DM problem and its simplification}
+
+In the DM, the buyer enters with balances $(z'_m,z'_d)$.  
+With probabilities $\alpha_1,\alpha_2,\alpha_3$ they meet a seller of type 1, 2, or 3 respectively; with probability $1-\alpha_1-\alpha_2-\alpha_3$ there is no trade.  
+In a type-$j$ meeting the buyer trades $q_j$ units, obtaining utility $u(q_j)$ and paying real balances $q_j$ in the instrument accepted at that meeting.
+
+The DM Bellman equation is
+\begin{align*}
+V(z'_m,z'_d)
+&= \alpha_1\bigl[u(q_1) + W(z'_m - q_1, z'_d)\bigr]
++ \alpha_2\bigl[u(q_2) + W(z'_m, z'_d - q_2)\bigr] \\
+&\quad + \alpha_3\bigl[u(q_3) + W(z'_m - q_3, z'_d)\bigr]
++ (1-\alpha_1-\alpha_2-\alpha_3) W(z'_m,z'_d).
+\end{align*}
+
+Using linearity of $W$ (e.g.\ $W(z'_m - q_1,z'_d)=W(z'_m,z'_d)-q_1$) we get
+\begin{align*}
+V(z'_m,z'_d)
+&= \alpha_1\bigl[u(q_1) + W(z'_m,z'_d) - q_1\bigr]
++ \alpha_2\bigl[u(q_2) + W(z'_m,z'_d) - q_2\bigr] \\
+&\quad + \alpha_3\bigl[u(q_3) + W(z'_m,z'_d) - q_3\bigr]
++ (1-\alpha_1-\alpha_2-\alpha_3) W(z'_m,z'_d) \\
+&= W(z'_m,z'_d)
++ \alpha_1[u(q_1)-q_1]
++ \alpha_2[u(q_2)-q_2]
++ \alpha_3[u(q_3)-q_3].
+\end{align*}
+
+Thus the DM value equals the CM value at the start-of-DM portfolio plus the expected net surplus from DM trade:
+\[
+V(z'_m,z'_d)
+= W(z'_m,z'_d)
++ \alpha_1[u(q_1)-q_1]
++ \alpha_2[u(q_2)-q_2]
++ \alpha_3[u(q_3)-q_3].
+\]
+
+\subsubsection*{4. Deriving the CM objective in terms of liquidity}
+
+Plug this expression into the CM problem:
+\begin{align*}
+W(z_m,z_d)
+&= \max_{x,z'_m,z'_d}
+\bigl\{ z_m + (1+i_d)z_d + T - z'_m - z'_d \\
+&\qquad + \beta\bigl[z'_m + (1+i_d)z'_d + W(0,0)\bigr] \\
+&\qquad + \beta\bigl(\alpha_1[u(q_1)-q_1]
++ \alpha_2[u(q_2)-q_2] + \alpha_3[u(q_3)-q_3]\bigr)
+\bigr\}.
+\end{align*}
+
+Using the Fisher equation $1+i = 1/\beta$ (zero inflation) we can rewrite the coefficients on $z'_m,z'_d$ as proportional to $-i$ and $-(i-i_d)$ respectively, so up to irrelevant positive factors the buyer chooses $(z'_m,z'_d)$ to maximize
+\[
+\alpha_1[u(q_1)-q_1]
++ \alpha_2[u(q_2)-q_2]
++ \alpha_3[u(q_3)-q_3]
+- i z'_m - (i - i_d) z'_d.
+\]
+
+Thus, maximizing the CM value is equivalent to maximizing expected DM surplus net of the opportunity cost of holding liquidity.
+
+\subsection*{Part 2: Baseline Economy (No CBDC)}
+
+In the baseline, there is only physical cash $z_m$ and deposits $z_d$.  
+We assume buyers bring exactly enough cash to cover type-1 trades and deposits to cover type-2 and type-3 trades:
+\[
+z_m = q_1, \qquad z_d = \max\{q_2,q_3\},
+\]
+and in type-3 meetings they use the cheapest instrument first.  
+Since $i > i - i_d$, deposits are cheaper than cash, so they strictly prefer to pay with deposits in type-3 meetings.
+
+\subsubsection*{1. First-order conditions}
+
+With these assumptions, the relevant objective over $(z_m,z_d)$ is
+\[
+\alpha_1[u(z_m)-z_m]
++ \alpha_2[u(z_d)-z_d]
++ \alpha_3[u(z_d)-z_d]
+- i z_m - (i - i_d) z_d.
+\]
+
+The FOC with respect to $z_m$ is
+\[
+\alpha_1[u'(z_m)-1] - i = 0
+\quad\Longrightarrow\quad
+u'(z_m) = \frac{1+i}{\alpha_1}.
+\]
+
+The FOC with respect to $z_d$ is
+\[
+(\alpha_2+\alpha_3)[u'(z_d)-1] - (i - i_d) = 0
+\quad\Longrightarrow\quad
+u'(z_d) = \frac{1 + i - i_d}{\alpha_2+\alpha_3}.
+\]
+
+These are the money-demand conditions stated in the problem.
+
+\subsubsection*{2. Effect of an increase in $i_d$ on $z_d$}
+
+From the deposit FOC,
+\[
+u'(z_d) = \frac{1 + i - i_d}{\alpha_2+\alpha_3}.
+\]
+For fixed $i,\alpha_2,\alpha_3$, a higher $i_d$ lowers the right-hand side.  
+Because $u''(q)<0$, $u'(q)$ is strictly decreasing in $q$, so a lower $u'(z_d)$ implies a higher $z_d$.  
+Therefore, an increase in the private bank interest rate $i_d$ raises the aggregate demand for bank deposits.
+
+\subsection*{Part 3: Introducing a Deposit-like CBDC}
+
+Now the central bank introduces a deposit-like CBDC balance $z_c$ paying interest $i_c$.  
+It uses the same digital infrastructure as bank deposits, so it is accepted in type-2 and type-3 meetings but not in type-1 meetings.  
+Suppose $i_c > i_d$, so CBDC has a lower opportunity cost $i-i_c$ than private deposits $i-i_d$.
+
+\subsubsection*{1. Objective with $(z_m,z_d,z_c)$}
+
+With three instruments, the opportunity costs per unit are:
+\[
+\text{cash: } i, \qquad
+\text{deposits: } i - i_d, \qquad
+\text{CBDC: } i - i_c.
+\]
+
+The CM objective (up to constants) becomes
+\[
+\max_{z_m,z_d,z_c}
+\left\{
+\alpha_1[u(q_1)-q_1]
++ \alpha_2[u(q_2)-q_2]
++ \alpha_3[u(q_3)-q_3]
+- i z_m - (i - i_d) z_d - (i - i_c) z_c
+\right\}.
+\]
+
+\subsubsection*{2. Crowding out of bank deposits when $i_c>i_d$}
+
+Suppose $i_c>i_d$, so that the CBDC has a lower opportunity cost than private deposits: $i-i_c<i-i_d$.
+
+If both deposits and CBDC are used in type‑2 and type‑3 meetings (an interior solution), their marginal utilities–net‑of‑cost must be equal. Analogous to Part 2, the FOCs take the form
+
+$$
+u'(z_d)=\frac{1+i-i_d}{\alpha_2+\alpha_3},\quad
+u'(z_c)=\frac{1+i-i_c}{\alpha_2+\alpha_3}.
+$$
+
+For an interior optimum in which both $z_d$ and $z_c$ are positive and used in the same types of meetings, we must have $u'(z_d)=u'(z_c)$. This requires
+
+$$
+\frac{1+i-i_d}{\alpha_2+\alpha_3}=\frac{1+i-i_c}{\alpha_2+\alpha_3}
+\quad\Rightarrow\quad i_d=i_c,
+$$
+
+which contradicts the assumption $i_c>i_d$.
+
+Therefore both assets cannot be held simultaneously in an interior solution: one must be at a corner. Since $i_c>i_d$ makes CBDC strictly cheaper (lower opportunity cost) than deposits, the buyer optimally holds only CBDC for type‑2 and type‑3 payments, implying
+
+$$
+z_d=0,\; z_c>0.
+$$
+
+Economically, the deposit‑like CBDC substitutes for bank deposits as a liquid, interest‑bearing means of payment in the DM. Buyers move their liquidity from private bank deposits to CBDC, shrinking the deposit base of banks—this is the “disintermediation” or “crowding‑out” risk of a deposit‑like CBDC design.
+
+\subsection*{Part 4: Introducing a Cash-like CBDC}
+
+Now suppose the central bank instead introduces a \emph{cash-like} CBDC.  
+This digital currency does not require a bank account, is peer-to-peer, and is accepted in type-1 and type-3 meetings.  
+It pays an interest rate $i_c$ with $0 < i_c < i_d$.  
+Physical cash pays zero interest and has opportunity cost $i$, so a unit of cash-like CBDC has opportunity cost $i - i_c < i$ and strictly dominates physical cash in the meetings where both can be used.
+
+\subsubsection*{1. New FOC for cash-like CBDC}
+
+Because CBDC dominates physical cash, buyers optimally set $z_m = 0$ and use cash-like CBDC balances $z_c$ for type-1 meetings (and in type-3 meetings alongside deposits).  
+The analogue of the cash FOC is
+\[
+\alpha_1[u'(z_c) - 1] - (i - i_c) = 0,
+\]
+which implies
+\[
+u'(z_c) = \frac{1 + i - i_c}{\alpha_1}.
+\]
+
+This matches the FOC requested in the problem statement.
+
+\subsubsection*{2. Payment efficiency: showing $z_c > z_m$}
+
+In the baseline without CBDC, the cash FOC was
+\[
+u'(z_m) = \frac{1+i}{\alpha_1}.
+\]
+
+With cash-like CBDC, the FOC is
+\[
+u'(z_c) = \frac{1 + i - i_c}{\alpha_1}.
+\]
+
+Because $0 < i_c < i_d$, we have $1 + i - i_c < 1 + i$, so
+\[
+u'(z_c) < u'(z_m).
+\]
+
+Since $u''(q)<0$, the marginal utility $u'(q)$ is strictly decreasing in $q$, so a lower marginal utility corresponds to a higher quantity:
+\[
+z_c > z_m.
+\]
+
+Thus agents hold strictly more real balances in the form of cash-like CBDC than they held as physical cash, allowing larger and more efficient DM trades in type-1 (and partly type-3) meetings; this is an increase in payment efficiency.
+
+\subsubsection*{3. General equilibrium “crowding in” of deposits (intuition)}
+
+The cash-like CBDC competes with physical cash but not perfectly with deposits, because deposits are accepted in type-2 and type-3 meetings, while cash-like CBDC is accepted in type-1 and type-3 meetings.  
+By lowering the opportunity cost of liquidity in type-1 and type-3 meetings, the CBDC raises the volume and efficiency of DM trade, increasing overall economic activity.  
+Higher total trade and income increase the demand for payment services that can only be provided with deposits in type-2 meetings, which tends to raise the desired stock of bank deposits $z_d$.  
+In general equilibrium, a well-designed cash-like CBDC can therefore produce a \emph{crowding-in} effect on the banking sector: despite competing with cash, it may increase, rather than decrease, the demand for private bank deposits.
+
+
+\section*{Exercise 2: Token Pricing -- Speculation vs. Usage}
+
+\subsection*{1. Token Asset Pricing Equation}
+
+Start from Euler equation \((4)\) and divide both sides by \(p_t\):
+\[
+1
+= \beta \frac{E_t[p_{t+1}]}{p_t}
+\left(
+1 + \alpha\left[\frac{u'(q)}{w'(q)} - 1\right]
+\right).
+\]
+
+Using \(\beta = \frac{1}{1+i}\) from \((1)\) and \(\frac{E_t[p_{t+1}]}{p_t} = 1 + \pi^e\), we obtain
+\[
+1
+= \frac{1}{1+i} (1+\pi^e)
+\left(
+1 + \alpha\left[\frac{u'(q)}{w'(q)} - 1\right]
+\right).
+\]
+
+Multiply both sides by \(\frac{1+i}{1+\pi^e}\):
+\[
+\frac{1+i}{1+\pi^e}
+=
+1 + \alpha\left[\frac{u'(q)}{w'(q)} - 1\right].
+\]
+
+Hence the required liquidity premium is
+\[
+\alpha\left[\frac{u'(q)}{w'(q)} - 1\right]
+= \frac{1+i}{1+\pi^e} - 1.
+\]
+
+This expression involves only the dollar interest rate \(i\) and the expected token appreciation \(\pi^e\).
+
+\paragraph{Economic interpretation of \(\frac{1+i}{1+\pi^e}\).}
+
+The term \(1+i\) is the gross return from holding dollars (the risk-free nominal asset), while \(1+\pi^e\) is the expected gross return from holding tokens as a financial asset.  
+The ratio \(\frac{1+i}{1+\pi^e}\) measures how attractive dollars are relative to tokens on pure return grounds.  
+If this ratio exceeds 1, holding dollars dominates financially, so the token must offer a positive liquidity premium (transaction/use value) to be held in equilibrium.
+
+\subsection*{2. Pure Speculation (\(\alpha = 0\))}
+
+Suppose the platform currently provides no utility from services, so \(\alpha = 0\).  
+Then the liquidity premium is zero:
+\[
+\alpha\left[\frac{u'(q)}{w'(q)} - 1\right] = 0.
+\]
+
+Plugging into the asset-pricing relation yields
+\[
+0 = \frac{1+i}{1+\pi^e} - 1
+\quad\Longrightarrow\quad
+\frac{1+i}{1+\pi^e} = 1
+\quad\Longrightarrow\quad
+1+i = 1+\pi^e
+\quad\Longrightarrow\quad
+\pi^e = i.
+\]
+
+So if \(\alpha=0\) and users still willingly hold tokens in the CM, we must have
+\[
+\pi^e = i.
+\]
+
+\paragraph{Economic interpretation.}
+
+With \(\alpha=0\), tokens have no current use as a medium of exchange: they deliver no service utility.  
+Investors are indifferent between dollars and tokens only if the expected capital gain on tokens equals the dollar interest rate.  
+In this case the token functions purely as a speculative asset, not as a medium of exchange.
+
+\subsection*{3. Volatility and Velocity (\(\pi^e < 0\))}
+
+Now assume the token is highly volatile and the market expects its price to crash, so \(\pi^e < 0\).  
+
+From the pricing equation:
+\[
+\alpha\left[\frac{u'(q)}{w'(q)} - 1\right]
+= \frac{1+i}{1+\pi^e} - 1.
+\]
+
+When \(\pi^e < 0\), we have \(1 + \pi^e < 1\), so
+\[
+\frac{1+i}{1+\pi^e} > 1+i > 1,
+\]
+and therefore the liquidity premium on the right-hand side is strictly positive and large:
+\[
+\alpha\left[\frac{u'(q)}{w'(q)} - 1\right] > 0 \quad \text{and large if } \pi^e \text{ is very negative.}
+\]
+
+Given \(\alpha>0\), this implies
+\[
+\frac{u'(q)}{w'(q)} - 1
+= \frac{1}{\alpha}
+\left(
+\frac{1+i}{1+\pi^e} - 1
+\right)
+\]
+must be large, so \(\frac{u'(q)}{w'(q)}\) must be high.  
+
+For a standard concave \(u(\cdot)\), a high \(u'(q)\) corresponds to low \(q\): each unit of service has very high marginal utility.  
+Thus to justify holding an asset with negative expected return, the per-unit liquidity benefit from spending it must be very large.
+
+\paragraph{Economic intuition: velocity of circulation.}
+
+A negative expected return \(\pi^e<0\) makes tokens unattractive as a store of value.  
+Rational users hold only the minimal token inventory necessary to execute imminent transactions; they buy tokens just before using the service and spend them immediately.  
+This behavior implies a high velocity of circulation: tokens are held for very short periods and used strictly as a transaction device, not for saving.
+
+\subsection*{4. The Tipping Point for the CIA Constraint}
+
+The cash-in-advance constraint
+\[
+w(q_{t+1}) \le p_{t+1} m_t
+\]
+binds when users hold just enough tokens to pay for services.  
+The constraint ceases to strictly bind when the marginal value of liquidity is zero, i.e.\ when the liquidity premium vanishes:
+\[
+\alpha\left[\frac{u'(q)}{w'(q)} - 1\right] = 0.
+\]
+
+With \(\alpha>0\), this is equivalent to \(\frac{u'(q)}{w'(q)} = 1\), and from the asset-pricing relation
+\[
+\alpha\left[\frac{u'(q)}{w'(q)} - 1\right]
+= \frac{1+i}{1+\pi^e} - 1 = 0
+\]
+we obtain the tipping point
+\[
+\frac{1+i}{1+\pi^e} = 1
+\quad\Longrightarrow\quad
+1+i = 1+\pi^e
+\quad\Longrightarrow\quad
+\pi^e = i.
+\]
+
+Thus, the cash-in-advance constraint ceases to strictly bind exactly when
+\[
+\boxed{\pi^e = i.}
+\]
+
+\paragraph{Economic interpretation.}
+
+At \(\pi^e = i\), the token's expected capital gain equals the dollar interest rate.  
+Even if the CIA constraint is slack, investors are willing to hold tokens purely as a financial asset, since they are as attractive as dollars.  
+
+When \(\pi^e > i\), tokens are strictly more attractive than dollars as an investment:
+
+\begin{itemize}
+\item Agents hold tokens not only for transactions but also for speculative motives.
+\item They accumulate token balances beyond what is needed to satisfy \(w(q_{t+1})\), so the CIA constraint becomes slack.
+\item The token increasingly behaves as a pure speculative asset: users hoard more tokens than needed for service consumption, and velocity falls as balances are held for longer periods.
+\end{itemize}
+
+
+\end{document}
