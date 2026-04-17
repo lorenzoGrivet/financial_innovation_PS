@@ -1,0 +1,9 @@
+{
+  "payload": {
+    "user_id": "Andrea",
+    "pk_bytes": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE6kv21fc8KBogaOvIS6E17mgC7q4b\nCDH159IQ9tGWyEgpzAs0Z/jBYzF/T+W2tUA9XbBCZI0rqV5lGcTgpH50fQ==\n-----END PUBLIC KEY-----\n",
+    "document_hash": "728803ac31e461d9a95da03c1086b53e39ce55f2b9578f1fab6e12ec48450d8c",
+    "timestamp": 1774161834
+  },
+  "signature": "MEYCIQCRqQ+eFQzUKR8Z0BgHIF3QQ3ZcgjYvq9SoSHgwzm4RGAIhAIMouSZZUy35nHq3bycisb6N2m2VYO8oW/ty9PL2oQOV"
+}

@@ -1,0 +1,9 @@
+{
+  "payload": {
+    "user_id": "Gri",
+    "pk_bytes": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEw7zLfX4Mckjltwbpo9qygs6Q5URE\nheT8SCzLVcJK/NSrnmzYNSO2GuTeqZBKRP7JqMSMm/YUmjZo+V2vI2sVFg==\n-----END PUBLIC KEY-----\n",
+    "document_hash": "e3462e2b1ad1289883416f1008eaf8c06f7b261e1b5f2c3d35f0bf8994da3f89",
+    "timestamp": 1774161834
+  },
+  "signature": "MEUCIQDuZjo/afg0xhPPBj3oJTp5SC83MxFWxrA1YO0rKtb7ZgIgf5Sb4Nc0qqISxjTkiL1zpUsA2GpVsY+KtArBQUbEwFE="
+}

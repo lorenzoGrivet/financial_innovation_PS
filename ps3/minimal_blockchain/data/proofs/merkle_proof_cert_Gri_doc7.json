@@ -1,0 +1,20 @@
+{
+  "target_cert_name": "cert_Gri_doc7.json",
+  "target_leaf_hash": "9f3331d70bcaceb9d16f322bf4badde41c91b720fa0c200874ca69353f9fdad9",
+  "target_index": 6,
+  "merkle_root": "d7d3c9765d7d118c810a43efdaeb24bea369fc157e3c65db504f1db71443757e",
+  "proof": [
+    {
+      "position": "right",
+      "hash": "e76a4c050c94b71269ab7c6dbe456ea3398726cb4e74fbf3a4d0ea81e2816adb"
+    },
+    {
+      "position": "left",
+      "hash": "00072ca77363919601927243cd0115dbd8f96059ebdcaa7154f86956146f74af"
+    },
+    {
+      "position": "left",
+      "hash": "66e53f8547612c0825b52bc754cd37484f2c802cb064cf7bedd5da451f21c145"
+    }
+  ]
+}

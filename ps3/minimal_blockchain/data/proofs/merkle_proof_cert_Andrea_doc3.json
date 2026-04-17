@@ -1,0 +1,20 @@
+{
+  "target_cert_name": "cert_Andrea_doc3.json",
+  "target_leaf_hash": "4343c0aced3071b22c2ffe8b4bde9fb2571299bfcf32660a651c7de82ff0861a",
+  "target_index": 0,
+  "merkle_root": "d7d3c9765d7d118c810a43efdaeb24bea369fc157e3c65db504f1db71443757e",
+  "proof": [
+    {
+      "position": "right",
+      "hash": "918eed467e090d70413ac1647f3912f33f96d60ba03fc14a27d668cf80370d21"
+    },
+    {
+      "position": "right",
+      "hash": "5c0ac85be34f54fca7a2d8a9fecfa4cce0aa93a4dd6141d1ec7daac98039cca1"
+    },
+    {
+      "position": "right",
+      "hash": "5e6faa63609be177d9f7a13966257a798b3c70c541ebca95b1da9eac9d03ec9a"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "payload": {
+    "user_id": "Daniela",
+    "pk_bytes": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEzSaxmsuhJ6OTjw/t9lV2iavSlQW7\n8Cz5JINhgzv86GD2z7yF6AIT+VikapQSgquhmVUtcSy+TQjp/wERs/rx8A==\n-----END PUBLIC KEY-----\n",
+    "document_hash": "9602c50d150fab4eff5d556d0e581fd75708cc079a538fcf52388a4a654d5f4b",
+    "timestamp": 1774161834
+  },
+  "signature": "MEUCIQD4lDFKKhVPmyxlNYimIMQNna9p5wIGynpHKRfPkcz7pwIgQXsc8NcLhxLw3RQExzHd6eX6eanAyI/eTaaNbOInBr8="
+}

@@ -1,0 +1,20 @@
+{
+  "target_cert_name": "cert_Daniela_doc1.json",
+  "target_leaf_hash": "b950f7c39678b613643b0f7c598135792a524bebc9863cb4d2e2b8ecd069a8e7",
+  "target_index": 4,
+  "merkle_root": "d7d3c9765d7d118c810a43efdaeb24bea369fc157e3c65db504f1db71443757e",
+  "proof": [
+    {
+      "position": "right",
+      "hash": "4700753e023fb28000d6720e2f221e1c122b7ef3c2ffdf62770b59761bc9c5ce"
+    },
+    {
+      "position": "right",
+      "hash": "a577f261ddb04f5f79187de28a6dd5084bd0b36cbc9af0d7df5d87880c9be587"
+    },
+    {
+      "position": "left",
+      "hash": "66e53f8547612c0825b52bc754cd37484f2c802cb064cf7bedd5da451f21c145"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "payload": {
+    "user_id": "Brian",
+    "pk_bytes": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE8HNVHG26tDiu6E6rLdSgEUTwTbW9\ncV/tm6ubo8+Yle3nRnr4zw15Xq/hZtQQOeDf8HCoyROGaZeqCfNWBDNhzg==\n-----END PUBLIC KEY-----\n",
+    "document_hash": "45dc6a9d4e01abe05ca9606fc924be5f051df1ab07c09374eebd1e2966aa46c5",
+    "timestamp": 1774161834
+  },
+  "signature": "MEUCIEViRMxriJjh0mehtgHWV4Bn33HByGcwO6FULk6LYcrsAiEA2ZJJ8eKqD42tGO/Dssptsr283Gt2g6Td3MKsYPHSS18="
+}

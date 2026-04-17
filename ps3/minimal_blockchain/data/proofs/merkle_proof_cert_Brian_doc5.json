@@ -1,0 +1,20 @@
+{
+  "target_cert_name": "cert_Brian_doc5.json",
+  "target_leaf_hash": "92e422075a6a1aba7ae610e9da260b1a3526704bb6586323753d5735f0eb5a6b",
+  "target_index": 2,
+  "merkle_root": "d7d3c9765d7d118c810a43efdaeb24bea369fc157e3c65db504f1db71443757e",
+  "proof": [
+    {
+      "position": "right",
+      "hash": "0613fd64c75edb3b4a2e2c184a133e46cb911f88add8971ee9dc1c38c04b6a5c"
+    },
+    {
+      "position": "left",
+      "hash": "e82184aaccc98da191bb4522508a28c27e8f15a4c63873a2868b6b8272976284"
+    },
+    {
+      "position": "right",
+      "hash": "5e6faa63609be177d9f7a13966257a798b3c70c541ebca95b1da9eac9d03ec9a"
+    }
+  ]
+}
