@@ -1,0 +1,715 @@
+\documentclass[11pt, a4paper]{article}
+
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{parskip}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{mdframed}
+
+\geometry{margin=2.5cm}
+
+% --- Custom environments ---
+\newmdenv[
+  backgroundcolor=gray!8,
+  linecolor=gray!40,
+  linewidth=0.5pt,
+  innerleftmargin=10pt,
+  innertopmargin=8pt,
+  innerbottommargin=8pt
+]{insight}
+
+\title{
+\textbf{Problem Set 1: The Kiyotaki-Wright (KW) Model}
+\normalsize Economics and Technology of Financial Innovation
+}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+\section*{Exercise 1}
+
+\subsection*{Question 1. Discrete-Time Bellman Equations}
+
+In each period, an agent maximises expected lifetime utility. We write the
+Bellman equations for $V_g$ and $V_m$.
+
+\subsubsection*{Value of holding a good, $V_g$}
+
+With probability $\alpha M\Pi$ the Seller meets a Buyer and trade occurs:
+the Seller produces (pays cost $c$), gives up the good, and becomes a Buyer.
+Otherwise, nothing happens and the Seller remains in the same state.
+\[
+  V_g \;=\; \alpha M\Pi\bigl[-c + \beta V_m\bigr]
+           \;+\; (1 - \alpha M\Pi)\,\beta V_g
+\]
+where $-c$ is the production cost, $\beta V_m$ is the discounted continuation
+value of becoming a Buyer and holding money, and $(1-\alpha M\Pi)$ is the probability of no trade,
+leaving the Seller with discounted value of keep holding the good $\beta V_g$. We denote the fraction of money traders as $M$.
+
+\subsubsection*{Value of holding money, $V_m$}
+With probability $\alpha(1-M)\Pi$ the Buyer meets a Seller willing to trade:
+the Buyer consumes (obtains utility $u$) and becomes a Seller.
+Otherwise, nothing happens.
+\[
+  V_m \;=\; \alpha(1- M)\Pi\bigl[u + \beta V_g\bigr]
+           \;+\; \bigl(1 - \alpha(1- M)\Pi\bigr)\beta V_m
+\]
+where $u$ is the utility from consumption, $\beta V_g$ is the discounted continuation
+value of becoming a Seller after spending the money, and $\bigl(1-\alpha(1- M)\Pi\bigr)$
+is the probability of no trade, leaving the Buyer with discounted value of
+keep holding money $\beta V_m$.
+
+
+
+% ============================================================
+\subsection*{Question 2. Continuous-Time Approximation}
+
+Now we apply the following approximations:
+\[
+  1 - \beta \approx r\beta, \qquad \beta \approx 1.
+\]
+These hold because $\beta = \frac{1}{1+r} \to 1$ for small $r$, discounting becomes approximately linear.
+
+\subsubsection*{Transforming the equation for $V_g$}
+
+Start from the discrete-time equation and expand:
+\[
+  V_g \;=\; \alpha M\Pi\bigl(-c + \beta V_m\bigr)
+           + \beta V_g - \alpha M\Pi\,\beta V_g.
+\]
+\[
+  V_g(1-\beta) \;=\; \alpha M\Pi\bigl[-c + \beta(V_m - V_g)\bigr].
+\]
+
+Substitute the approximations:
+\[
+  rV_g \;=\; \alpha M\Pi\bigl[-c + (V_m - V_g)\bigr]
+\]
+
+\subsubsection*{Transforming the equation for $V_m$}
+
+We apply the same procedure we did for the Seller:
+\[
+  V_m(1-\beta) \;=\; \alpha(1- M)\Pi\bigl[u + \beta(V_g - V_m)\bigr].
+\]
+
+\[
+  rV_m \;=\; \alpha(1- M)\Pi\bigl[u + (V_g - V_m)\bigr]
+\]
+
+
+% ============================================================
+\subsection*{Question 3. Incentive to Trade: Deriving $\Delta$}
+
+Let $\Delta \equiv V_m - V_g$ denote the net benefit
+of being a Buyer relative to being a Seller.
+
+We write the flow equations using $\Delta$:
+\[
+  rV_g = \alpha M\Pi(-c + \Delta),
+  \qquad
+  rV_m = \alpha(1- M)\Pi(u - \Delta).
+\]
+Subtract the first from the second:
+\[
+  r\Delta = r V_m - r V_g
+           = \alpha(1- M)\Pi(u-\Delta) \;-\; \alpha M\Pi(-c+\Delta).
+\]
+With some algebraic steps:
+\begin{align*}
+  r\Delta
+  &= \alpha\Pi\bigl[(1- M)(u-\Delta) +  M(c-\Delta)\bigr] \\[4pt]
+  &= \alpha\Pi\bigl[(1- M)u +  M c\bigr] - \alpha\Pi\Delta\bigl[(1- M)+ M\bigr] \\[4pt]
+  &= \alpha\Pi\bigl[(1- M)u +  M c\bigr] - \alpha\Pi\Delta.
+\end{align*}
+\[
+  r\Delta + \alpha\Pi\Delta = \alpha\Pi\bigl[(1- M)u +  M c\bigr].
+\]
+We finally obtain:
+
+\[
+  \Delta \;=\; \frac{\alpha\Pi\bigl[(1- M)\,u +  M\,c\bigr]}{r + \alpha\Pi}
+\]
+
+
+
+% ============================================================
+\subsection*{Question 4. Equilibrium}
+
+For a Seller to voluntarily accept money the incentive compatibility must be satisfied, indeed the discounted gain from becoming a
+Buyer must cover the production cost:
+\[
+  \Delta(\Pi) \;\geq\; c.
+\]
+
+We also add that $\Pi = 0$ (the non-monetary, autarky equilibrium in which money is never accepted) always satisfies this condition and is therefore always an equilibrium even if there is no exchange.
+
+\subsubsection*{Monetary Equilibrium ($\Pi = 1$)}
+Exists if and only if all Sellers are willing to accept money when they expect
+all other Sellers to do so. Starting from $\Delta(1) \geq c$:
+\[
+  \frac{\alpha\bigl[(1-\mu)u + \mu c\bigr]}{r + \alpha} \geq c
+  \;\implies\;
+  \alpha(1-\mu)(u-c) \;\geq\; cr.
+\]
+
+
+\subsubsection*{Mixed Equilibrium ($\Pi^* \in (0,1)$)}
+
+Under the condition: $\Delta(\Pi^*) = c$. Solving:
+\[
+  \alpha\Pi^*\bigl[(1- M)u +  M c\bigr] = c\,(r + \alpha\Pi^*),
+\]
+\[
+  \alpha\Pi^*\bigl[(1- M)u +  M c - c\bigr] = cr,
+\]
+\[
+  \Pi^* = \frac{cr}{\alpha(1- M)(u-c)}.
+\]
+
+This equilibrium exists but it is not very stable because a small change in $\Pi^*$ can shift our solution to one of the other two equilibria.
+
+\textbf{To sum up:}
+\begin{itemize}
+  \item \textbf{Non-monetary} ($\Pi = 0$): money is worthless and never accepted.
+        Always exists.
+  \item \textbf{Monetary} ($\Pi = 1$): money is universally accepted.
+        Requires $\Delta(1) \geq c$.
+  \item \textbf{Mixed} ($\Pi^* \in (0,1)$): Sellers are indifferent.
+        Exists when $\Delta(1) < c$ and $\Pi^* \leq 1$.
+\end{itemize}
+
+% ============================================================
+\subsection*{Question 5. Welfare}
+
+Define social welfare as:
+\[
+  W \;=\;  M V_m + (1- M)V_g.
+\]
+
+\subsubsection*{(a) Deriving $rW$}
+
+Multiply by $r$ and substitute the flow equations from Question 2:
+\begin{align*}
+  rW &=  M\cdot rV_m + (1- M)\cdot rV_g \\
+     &=  M\cdot\alpha(1- M)\Pi(u-\Delta)
+        + (1- M)\cdot\alpha M\Pi(-c+\Delta).
+\end{align*}
+\[
+  rW = \alpha\Pi M(1- M)\bigl[(u-\Delta) + (-c+\Delta)\bigr].
+\]
+\[
+rW \;=\; \alpha\Pi\, M(1- M)\,(u-c)
+\]
+
+Welfare depends only on the rate of trade $\alpha\Pi\mu(1-\mu)$ and the
+surplus per trade $(u-c)$. The cancellation of $\Delta$ reflects the fact that money has no intrinsic value: it merely enables exchanges that would not otherwise occur.
+
+
+
+\subsection*{(b) Optimal money supply $ M^*$}
+
+We start from the welfare equation that we just obtained:
+\[
+  rW = \alpha(u-c)\cdot M(1- M).
+\]
+
+Maximise over $ M \in (0,1)$:
+\[
+  \frac{d}{d M}\bigl[ M(1- M)\bigr]
+  = 1 - 2 M = 0
+  \implies
+   M^* = \tfrac{1}{2}.
+\]
+
+The product $M(1-M)$ is maximised when Buyers and Sellers are in equal numbers: having too much or too little money reduces the frequency of successful trades.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%PROSSIMOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%ESERCIZIO 2
+% ============================================================
+
+\section*{Exercise 2}
+\subsection*{Question 1. Bellman Equations with Barter}
+
+We now extend the baseline KW model by introducing a double coincidence of wants parameter $x \in (0,1)$, where $x$ is the probability of a single coincidence of wants and $x^2$ is the probability of a double coincidence (barter).
+
+The two states are:
+\begin{itemize}
+  \item Commodity Traders (fraction $1 - M$): hold a good, can barter
+        or sell for money.
+  \item Money Traders (fraction $M$): hold money, can buy goods.
+\end{itemize}
+
+\subsubsection*{Value of a Commodity Trader, $V_g$}
+
+A Commodity Trader can trade in two ways. With probability $\alpha(1-M)x^2$ he meets another Commodity Trader and a double coincidence occurs: both produce (cost $c$), consume (utility $u$), and remain Commodity Traders. With probability $\alpha M x \Pi$ he meets a Money Trader who wants his good and accepts money: he produces (cost $c$) and becomes a Money Trader.
+
+\[
+  rV_g \;=\; \alpha(1-M)x^2\,(u-c)
+           \;+\; \alpha Mx\Pi\,(-c + \Delta)
+\]
+
+where $\Delta \equiv V_m - V_g$ is the net value of holding money. The fist term represents the barter, the second one instead represents the "classic" sale.
+
+\subsubsection*{Value of a Money Trader, $V_m$}
+
+With probability $\alpha(1-M)x\Pi$ the Money Trader meets a willing Commodity Trader: he consumes (utility $u$) and becomes a Commodity Trader.
+\[
+  rV_m \;=\; \alpha(1-M)x\Pi\,(u - \Delta)
+\]
+
+
+% ==========================
+
+% ============================================================
+\subsection*{Question 2. Solving for Steady-State Values}
+ 
+\subsubsection*{Deriving $\Delta = V_m - V_g$}
+ 
+Subtract the flow equation for $V_g$ from that of $V_m$:
+\[
+  r\Delta = rV_m - rV_g
+          = \alpha(1-M)x\Pi(u-\Delta)
+            \;-\; \alpha(1-M)x^2(u-c)
+            \;-\; \alpha Mx\Pi(-c+\Delta).
+\]
+
+Rearranging the equation:
+
+\begin{align*}
+  r\Delta
+  &= \alpha x\Pi\bigl[(1-M)(u-\Delta) + M(c-\Delta)\bigr]
+     - \alpha(1-M)x^2(u-c) \\[4pt]
+  &= \alpha x\Pi\bigl[(1-M)u + Mc\bigr]
+     - \alpha x\Pi\,\Delta
+     - \alpha(1-M)x^2(u-c).
+\end{align*}
+\[
+  (r + \alpha x\Pi)\,\Delta
+  \;=\; \alpha x\Pi\bigl[(1-M)u + Mc\bigr] - \alpha(1-M)x^2(u-c).
+\]
+We finally obtain:
+\[
+  \Delta \;=\;
+    \frac{\alpha x\bigl\{\Pi\bigl[(1-M)u + Mc\bigr] - (1-M)x(u-c)\bigr\}}
+         {r + \alpha x\Pi}
+\]
+
+\subsubsection*{Recovering $V_g$ and $V_m$}
+ 
+Having computed $\Delta$, we recover the individual value functions directly from the flow equations. 
+
+
+From the Bellman equation of Question 1 we divide by $r$:
+\[
+  rV_g \;=\; \alpha(1-M)x^2(u-c) \;+\; \alpha Mx\Pi\,(-c + \Delta).
+\]
+\[
+  V_g \;=\;
+    \frac{\alpha(1-M)x^2(u-c) \;+\; \alpha Mx\Pi\,(-c+\Delta)}{r}
+\]
+ 
+Using the definition $\Delta = V_m - V_g$:
+\[V_m \;=\; V_g + \Delta
+       \;=\; \frac{\alpha(1-M)x^2(u-c) \;+\; \alpha Mx\Pi\,(-c+\Delta)}{r}
+             \;+\; \Delta
+\]
+ 
+These are the steady-state values expressed entirely in terms of $(\alpha, M, x, \Pi, r, u, c)$.
+ 
+ 
+% ============================================================
+\subsection*{Question 3. Welfare Derivation}
+
+Define total social welfare as $W = MV_m + (1-M)V_g$. Multiplying by $r$ and
+substituting the flow equations:
+\begin{align*}
+  rW &= M \cdot rV_m + (1-M) \cdot rV_g \\
+     &= M \cdot \alpha(1-M)x\Pi(u-\Delta)
+       + (1-M)\bigl[\alpha(1-M)x^2(u-c) + \alpha Mx\Pi(-c+\Delta)\bigr].
+\end{align*}
+
+Expanding the second term:
+\[
+  rW = \alpha(1-M)Mx\Pi(u-\Delta) + \alpha(1-M)^2x^2(u-c)
+       + \alpha(1-M)Mx\Pi(-c+\Delta).
+\]
+Then we obtain:
+\begin{align*}
+  &M\cdot\alpha(1-M)x\Pi(u-\Delta) + \alpha(1-M)Mx\Pi(-c+\Delta) \\
+  &\quad= \alpha(1-M)Mx\Pi\,\bigl[(u-\Delta)+(-c+\Delta)\bigr] \\
+  &\quad= \alpha(1-M)Mx\Pi\,(u-c).
+\end{align*}
+
+Therefore:
+\[
+  rW \;=\; \alpha(1-M)\bigl[(1-M)x^2 + Mx\Pi\bigr](u-c)
+\]
+
+The result can be interpreted by observing that each exchange (that could be a barter or a monetary trade) generates a surplus equal to $(u-c)$. The cancellation of $\Delta$ again reflects the fact that money has no intrinsic value: it just facilitates exchanges.
+
+
+% ============================================================
+\subsection*{Question 4. Welfare Comparison and Ranking}
+
+\subsubsection*{Monetary Equilibrium ($\Pi = 1$) vs.\ Barter ($\Pi = 0$)}
+
+Setting $\Pi = 1$ and $\Pi = 0$ respectively in the welfare formula:
+\begin{align*}
+  rW_{money}  &= \alpha(1-M)\bigl[(1-M)x^2 + Mx\bigr](u-c), \\[4pt]
+  rW_{barter} &= \alpha(1-M)^2 x^2 (u-c).
+\end{align*}
+
+\subsubsection*{(a) Condition on $x$ for Monetary Equilibrium to Be higher}
+
+We compute $rW_{\text{money}} - rW_{\text{barter}}$:
+\begin{align*}
+  rW_{\text{money}} - rW_{\text{barter}}
+  &= \alpha(1-M)(u-c)\bigl[(1-M)x^2 + Mx - (1-M)x^2\bigr] \\
+  &= \alpha(1-M)Mx(u-c).
+\end{align*}
+
+Since $\alpha, M, (1-M), x, (u-c) > 0$, we have:
+\[
+  rW_{\text{money}} - rW_{\text{barter}} = \alpha M(1-M)x(u-c) > 0
+  \quad \text{for all } x \in (0,1),\; M \in (0,1).
+\]
+
+The monetary equilibrium has always strictly higher welfare than the
+pure barter equilibrium whenever $M > 0$. It has to be remarked that the monetary equilibrium only exists when this IC constraint is satisfied.
+
+\subsubsection*{(b) Interpretation and Ranking of Equilibria}
+
+The intuition for the role of $x$ follows directly from the structure of the model:
+
+\begin{itemize}
+  \item Low $x$: Double coincidences are rare (probability $x^2 \ll x$).
+        Barter is highly inefficient because agents almost never find a partner with mutually compatible wants. Then money is essential: it requires only a single coincidence ($x$) to execute a trade.
+        Ranking: $W_{\text{money}} \gg W_{\text{barter}}$.
+
+  \item High $x$: Double coincidences are frequent ($x^2 \approx x$),
+        so agents can already find barter partners easily. Money still helps but the gain is small.
+        Ranking: $W_{\text{money}} > W_{\text{barter}}$, but the gap is narrow.
+
+\end{itemize}
+We can conclude saying that always: $W_{\text{money}} \geq W_{\text{barter}}$ because money is an additional instrument that enable trades that would otherwise not happen.
+\section*{Exercise 3: The Original, 3-State, KW Model}
+
+\subsection*{1. Bellman Equations}
+In this extension of the model, agents cycle through three states: Learners ($V_0$), Commodity Traders ($V_1$) and Money Traders ($V_m$). The continuous-time Bellman equations represent the expected flow value of being in each state:
+
+\begin{itemize}
+    \item \textbf{Learner ($V_0$):} Agents currently have no goods and no money. They successfully learn to produce at a Poisson rate $\lambda$, transitioning to the Commodity Trader state ($V_1$).
+    \begin{equation}
+        rV_0 = \lambda(V_1 - V_0)
+    \end{equation}
+
+    \item \textbf{Commodity Trader ($V_1$):} Agents hold a good. They can meet another seller to barter (probability $\alpha(1-\mu)x^2$), consume and return to $V_0$. Alternatively, they can meet a buyer with money (probability $\alpha\mu x\Pi$), sell their good, incur production cost $c$ and transition to $V_m$.
+    \begin{equation}
+        rV_1 = \alpha(1-\mu)x^2(u - c + V_0 - V_1) + \alpha\mu x\Pi(-c + V_m - V_1)
+    \end{equation}
+
+    \item \textbf{Money Trader ($V_m$):} Agents hold money. They meet a willing seller (probability $\alpha(1-\mu)x\Pi$), buy the good, consume it (gaining utility $u$) and return to the learner state ($V_0$).
+    \begin{equation}
+        rV_m = \alpha(1-\mu)x\Pi(u + V_0 - V_m)
+    \end{equation}
+\end{itemize}
+
+\subsection*{2. Steady State}
+
+\subsubsection*{a) Flow Equations}
+In a steady-state equilibrium, the flow of agents into a state must exactly equal the flow of agents out of that state ($\text{Inflow} = \text{Outflow}$).
+
+\textbf{Learners ($N_0$):}
+The outflow consists of agents graduating to the active market at rate $\lambda$. The inflow consists of active traders who just consumed and must return to learning. This includes both barter transactions and monetary purchases.
+\begin{equation}
+    \lambda N_0 = \alpha(1-\mu)x^2 N_1 + \alpha(1-\mu)x\Pi N_m
+\end{equation}
+
+\textbf{Money Traders ($N_m$):}
+The inflow consists of commodity traders ($N_1$) who successfully sell their goods for money. The outflow consists of money traders ($N_m$) who successfully buy goods and consume them.
+\begin{equation}
+    \alpha\mu x\Pi N_1 = \alpha(1-\mu)x\Pi N_m
+\end{equation}
+
+\subsubsection*{b) Quadratic Equation for Learners}
+To derive the quadratic equation $AN_0^2 + BN_0 + C = 0$, we must note an important notational nuance: here, the parameter $\mu$ represents the \textbf{fixed total mass of money} in the economy (i.e., $N_m = \mu$). 
+
+Using the population normalization $N_0 + N_1 + N_m = 1$, we can express the mass of commodity traders as:
+\[ N_1 = 1 - \mu - N_0 \]
+
+The total mass of active traders in the market is $N_1 + N_m = 1 - N_0$. Due to random matching, the actual density (probability) of encountering a seller among the active traders is $\frac{N_1}{1-N_0}$. We substitute this explicit density into the $N_0$ flow equation:
+\begin{align*}
+    \alpha \left( \frac{N_1}{1 - N_0} \right) x^2 N_1 + \alpha \left( \frac{N_1}{1 - N_0} \right) x\Pi N_m &= \lambda N_0
+\end{align*}
+
+Multiply both sides by $(1 - N_0)$ to clear the denominator:
+\begin{align*}
+    \alpha x^2 N_1^2 + \alpha x\Pi N_m N_1 &= \lambda N_0 (1 - N_0)
+\end{align*}
+
+Now substitute $N_m = \mu$ and $N_1 = (1 - \mu - N_0)$:
+\begin{align*}
+    \alpha x^2 (1 - \mu - N_0)^2 + \alpha x\Pi \mu (1 - \mu - N_0) &= \lambda N_0 - \lambda N_0^2
+\end{align*}
+
+Expand the squared term $[(1 - \mu) - N_0]^2$:
+\begin{align*}
+    \alpha x^2 \left[ (1 - \mu)^2 - 2(1 - \mu)N_0 + N_0^2 \right] + \alpha x\Pi \mu (1 - \mu) - \alpha x\Pi \mu N_0 &= \lambda N_0 - \lambda N_0^2
+\end{align*}
+
+Bring all terms to the left side and group them by the powers of $N_0$:
+\begin{align*}
+    \text{For } N_0^2&: \quad (\lambda + \alpha x^2) N_0^2 \\
+    \text{For } N_0&: \quad - \left[ \lambda + 2\alpha x^2(1 - \mu) + \alpha x\Pi\mu \right] N_0 \\
+    \text{Constants}&: \quad \alpha(1 - \mu) \left[ x^2(1 - \mu) + x\Pi\mu \right]
+\end{align*}
+
+This gives us the exact coefficients for the quadratic equation:
+\begin{align*}
+    A &= \lambda + \alpha x^2 \\
+    B &= -\left[ \lambda + \alpha(2x^2(1 - \mu) + x\Pi\mu) \right] \\
+    C &= \alpha(1 - \mu) \left[ x^2(1 - \mu) + x\Pi\mu \right]
+\end{align*}
+
+\subsection*{3. Equilibrium Characterization}
+Assume a Monetary Equilibrium where money is universally accepted ($\Pi = 1$).
+
+\subsubsection*{a) Market Tightness ($\mu$)}
+Market tightness is defined as the fraction of money traders among all active traders. Let $M$ be the fixed total mass of fiat money (so $N_m = M$). The total mass of active traders is $1 - N_0$. Thus:
+\begin{equation}
+    \mu_{\text{tightness}} = \frac{N_m}{N_1 + N_m} = \frac{M}{1 - N_0}
+\end{equation}
+
+\subsubsection*{b) Incentive Compatibility (IC) Condition}
+For sellers to voluntarily accept money, the net gain of transitioning to a money holder must cover the immediate cost of production: $V_m - V_1 \ge c$.
+
+Let $\Delta = V_m - V_1$. We start by subtracting the $rV_1$ Bellman equation from $rV_m$ (with $\Pi=1$):
+\begin{align*}
+    rV_m &= \alpha(1-\mu)x(u + V_0 - V_m) \\
+    rV_1 &= \alpha(1-\mu)x^2(u - c + V_0 - V_1) + \alpha\mu x(-c + \Delta)
+\end{align*}
+
+Notice the algebraic trick for the $rV_m$ equation: $V_0 - V_m = V_0 - V_1 + V_1 - V_m = (V_0 - V_1) - \Delta$. Substituting this into $rV_m$:
+\begin{equation*}
+    rV_m = \alpha(1-\mu)x[u + (V_0 - V_1) - \Delta]
+\end{equation*}
+
+Now subtract $rV_1$ from $rV_m$ to isolate $r\Delta$:
+\begin{align*}
+    r\Delta &= \alpha(1-\mu)x[u + (V_0 - V_1) - \Delta] - \left[ \alpha(1-\mu)x^2(u - c + V_0 - V_1) + \alpha\mu x(-c + \Delta) \right]
+\end{align*}
+
+Expand and move all $\Delta$ terms to the left side:
+\begin{align*}
+    r\Delta + \alpha(1-\mu)x\Delta + \alpha\mu x\Delta &= \alpha(1-\mu)x[u + (V_0 - V_1)] - \alpha(1-\mu)x^2(u - c + V_0 - V_1) + \alpha\mu x c \\
+    \Delta [r + \alpha x(1-\mu) + \alpha x\mu] &= \dots \\
+    \Delta (r + \alpha x) &= \alpha(1-\mu)x[u + (V_0 - V_1)] - \alpha(1-\mu)x^2(u - c + V_0 - V_1) + \alpha\mu x c
+\end{align*}
+
+Divide by $(r + \alpha x)$ to solve for $\Delta$ and substitute $(V_0 - V_1)$ with $-(V_1 - V_0)$ for standard formatting:
+\begin{equation}
+    \Delta = \frac{\alpha(1-\mu)x[u - (V_1 - V_0)] - \alpha(1-\mu)x^2[u - c - (V_1 - V_0)] + \alpha\mu x c}{r + \alpha x}
+\end{equation}
+
+Setting $\Delta \ge c$ yields the required Incentive Compatibility condition.
+
+\subsection*{4. Welfare}
+Total social welfare is defined as the sum of utilities: $W = N_0 V_0 + N_1 V_1 + N_m V_m$. In the steady state, flow welfare can be evaluated as the rate of entry into the productive market multiplied by the net surplus per completed trade cycle:
+\begin{equation}
+    rW = \lambda N_0 (u - c)
+\end{equation}
+
+\textbf{Effect of increasing the learning speed ($\lambda$):} 
+If $\lambda$ increases, agents spend significantly less time idle in the non-productive learner state ($N_0$) and transition into the active trading pool much faster. A higher $\lambda$ increases the density of active buyers and sellers in the market, which directly reduces search frictions. This leads to a higher frequency of successful transactions, ultimately driving total social welfare higher.
+
+\section*{Exercise 4: The Credit System}
+
+\section*{1. Value Function}
+In a perfect credit system, physical money is replaced by a centralized public ledger that acts as societal "memory," tracking all past transactions and enforcing good standing. Agents operate under a "gift exchange" agreement: they will produce a good for anyone they meet who wants it, relying on the ledger to ensure they can consume later. Because of this, agents successfully capture all single coincidence meetings (probability $x$). The direct barter events (double coincidence, $x^2$) are absorbed into the broader frequency of all active single coincidence trades ($x$), because the ledger perfectly balances their intertemporal giving and receiving.
+
+In a balanced steady state, an agent produces as often as they consume. Thus, the expected net surplus per useful meeting is the utility gained ($u$), minus the production cost ($c$) and the record-keeping cost ($\kappa$). By multiplying the overall arrival rate of meetings ($\alpha$) by the probability of a useful trade opportunity ($x$) and the net surplus per trade, we obtain the continuous-time Bellman equation for an agent in good standing ($V_c$):
+\begin{equation}
+    rV_c = \alpha x(u - c - \kappa)
+\end{equation}
+
+\subsection*{2. Viability (Incentive Compatibility)}
+
+When an agent is called upon to produce for another agent, they face a choice:
+\begin{itemize}
+    \item \textbf{Cooperate:} Pay the immediate production cost $c$ and maintain their good standing, keeping the lifetime continuation value $V_c$.
+    \item \textbf{Defect:} Refuse to produce, saving the immediate cost $c$. However, as a punishment, they are permanently banned from the credit ledger. Assuming the autarky/banishment value is $0$, their continuation value becomes $0$.
+\end{itemize}
+
+To prevent defection, the value of staying in the credit system must strictly exceed the one-time gain of defecting:
+\begin{equation*}
+    V_c \ge c + 0
+\end{equation*}
+
+Substituting the explicit value of $V_c$ from the Bellman equation gives the required condition relating $r, \alpha, x, \kappa$ and $c$:
+\begin{equation}
+    \alpha x(u - c - \kappa) \ge rc
+\end{equation}
+This condition dictates that the expected flow of future net surplus from participating in the credit network must be greater than or equal to the amortized capital cost of producing a single good today.
+
+\subsection*{3. Welfare Comparison}
+
+\begin{itemize}
+    \item \textbf{Credit system:} In the credit system, all agents are identical, hence social welfare collapses to $W_{\text{credit}} = V_c$. Multiplying by $r$ and substituting the Bellman equation:
+    \begin{equation}
+        rW_{\text{credit}} = \alpha x(u - c - \kappa)
+    \end{equation}
+    \item \textbf{Money system:} In the monetary regime with $\Pi = 1$, a trade occurs only when three conditions are simultaneously met: an agent is encountered (rate $\alpha$), the agent desires the specific good (probability $x$) and the buyer actually holds money (probability $\mu$, the \textit{liquidity friction}). The effective trade rate is therefore $\alpha \mu x$, yielding:
+    \begin{equation}
+        rW_{\text{money}} \approx \alpha \mu x (u - c)
+    \end{equation}
+\end{itemize}
+
+We derive the condition under which credit strictly dominates money, i.e., $W_{\text{credit}} > W_{\text{money}}$:
+\begin{align*}
+    \alpha x(u - c - \kappa) &> \alpha \mu x(u - c)
+\end{align*}
+Dividing both sides by $\alpha x > 0$, rearranging and collecting $(u - c)$ terms:
+\begin{align*}
+    (u - c - \kappa) &> \mu(u - c) \\
+    (u - c)(1 - \mu) &> \kappa
+\end{align*}
+This yields the threshold condition:
+\begin{equation}
+    \boxed{\kappa < (u - c)(1 - \mu)}
+\end{equation}
+
+\begin{itemize}
+    \item \textbf{When credit is superior:} Credit dominates in environments with high trust (low discount rate $r$), frequent meetings and low record-keeping costs (low $\kappa$). For example, in small villages where everyone knows each other, memory is practically free, making physical money unnecessary.
+    \item \textbf{When money is superior:} Money is preferred in large societies where trust is low and the administrative cost of tracking millions of complex credit histories (high $\kappa$) would outweigh the surplus of trade. Money solves the "missing memory" problem frictionlessly by using a physical token as proof of past production.
+\end{itemize}
+
+
+\section*{Exercise 5: Dual Asset Regimes}
+
+\subsection*{1. Bellman Equations}
+
+In this economy, agents hold either commodities ($V_C$), Red assets ($V_R$), or Blue assets ($V_B$). There is no direct barter, so trade only occurs when a commodity trader meets an asset holder and accepts the asset.
+
+\begin{itemize}
+    \item \textbf{Commodity Trader ($V_C$):} The agent meets holders of assets $R$ and $B$ with probabilities $\alpha M_R$ and $\alpha M_B$. Upon accepting asset $i \in \{R,B\}$, the agent pays cost $c$ and transitions to $V_i$.
+    \begin{equation}
+        rV_C = \alpha M_R \Pi_R (V_R - V_C - c) + \alpha M_B \Pi_B (V_B - V_C - c)
+    \end{equation}
+
+    \item \textbf{Red Asset Holder ($V_R$):} The agent receives a flow payoff $\gamma_R$ and can meet a commodity trader (probability $\alpha M_C$). If trade occurs, the agent consumes and transitions to $V_C$.
+    \begin{equation}
+        rV_R = \gamma_R + \alpha M_C \Pi_R (u + V_C - V_R)
+    \end{equation}
+
+    \item \textbf{Blue Asset Holder ($V_B$):} Analogous to $V_R$, with intrinsic payoff $\gamma_B$.
+    \begin{equation}
+        rV_B = \gamma_B + \alpha M_C \Pi_B (u + V_C - V_B)
+    \end{equation}
+\end{itemize}
+
+\subsection*{2. When do Assets Become Money?}
+
+\subsubsection*{a) Incentive Compatibility (IC)}
+
+An asset $i$ is accepted in exchange for goods if the gain from acquiring it exceeds the production cost:
+\begin{equation}
+    V_i - V_C \ge c, \quad i \in \{R,B\}
+\end{equation}
+
+\subsubsection*{b) Dual Currency Equilibrium}
+
+Both assets circulate as money if:
+\begin{equation}
+    \Pi_R = 1, \quad \Pi_B = 1
+\end{equation}
+which requires:
+\begin{equation}
+    V_R - V_C \ge c \quad \text{and} \quad V_B - V_C \ge c
+\end{equation}
+
+\subsubsection*{c) Gresham's Law / Dominant Currency}
+
+Suppose $\gamma_B > \gamma_R$, so the Blue asset has higher intrinsic value. An equilibrium may exist where:
+\[
+\Pi_R = 1, \quad \Pi_B = 0
+\]
+
+Even though Blue is intrinsically more valuable, agents prefer to hold it as a store of value rather than spend it. Red, being less valuable, is used as a medium of exchange. This reflects Gresham's Law: \textit{"bad money drives out good money."}
+
+\subsection*{Interpretation}
+
+The liquidity of an asset depends not only on its intrinsic return $\gamma_i$, but also on its acceptance in trade. High-return assets may fail to circulate because agents prefer to hoard them, while lower-return assets become money.
+
+---
+
+\section*{Exercise 6: Endogenous Money Supply (Mining \& Depreciation)}
+
+\subsection*{1. Bellman Equations}
+
+Agents in the entrepreneur state choose between producing goods or mining money.
+
+\begin{itemize}
+    \item \textbf{Entrepreneurs ($V_0$):} Agents choose the most valuable activity between producing goods or mining money.
+    \begin{equation}
+        rV_0 = \max \left\{ \lambda_g (V_1 - V_0), \; \lambda_m (V_m - V_0) \right\}
+    \end{equation}
+
+    \item \textbf{Commodity Traders ($V_1$):} They can sell goods for money.
+    \begin{equation}
+        rV_1 = \alpha \mu x \Pi (V_m - V_1 - c)
+    \end{equation}
+
+    \item \textbf{Money Traders ($V_m$):} They can buy goods, but money depreciates at rate $\delta$.
+    \begin{equation}
+        rV_m = \alpha (1-\mu)x \Pi (u + V_0 - V_m) - \delta (V_m - V_0)
+    \end{equation}
+\end{itemize}
+
+\subsection*{2. Arbitrage Condition}
+
+If both goods production and money mining occur in equilibrium, agents must be indifferent between the two activities:
+\begin{equation}
+    \lambda_g (V_1 - V_0) = \lambda_m (V_m - V_0)
+\end{equation}
+
+This ensures that both sectors are active in equilibrium.
+
+\subsection*{3. Money Supply Dynamics}
+
+Let $\phi$ be the fraction of entrepreneurs choosing to produce goods, so $(1-\phi)$ produce money.
+
+\subsubsection*{a) Steady-State Condition}
+
+In steady state, money creation equals money destruction:
+\begin{equation}
+    (1-\phi)\lambda_m N_0 = \delta N_m
+\end{equation}
+
+\subsubsection*{b) Comparative Statics}
+
+\begin{itemize}
+    \item \textbf{Decrease in mining efficiency ($\lambda_m \downarrow$):} Reduces the creation of money, leading to a lower steady-state money supply:
+    \[
+    \mu \downarrow
+    \]
+
+    \item \textbf{Increase in depreciation ($\delta \uparrow$):} Increases the destruction rate of money, also reducing the steady-state money supply:
+    \[
+    \mu \downarrow
+    \]
+\end{itemize}
+
+\subsection*{Interpretation}
+
+The money supply is endogenously determined by a balance between incentives to create money and the risk of losing it. Higher depreciation or lower mining productivity reduces the attractiveness of holding money, thereby shrinking its equilibrium supply.
+
+
+\end{document}
